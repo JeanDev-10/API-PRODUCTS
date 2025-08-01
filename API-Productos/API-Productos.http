@@ -1,0 +1,106 @@
+### BASE URL
+@baseUrl = http://localhost:5065/api/products
+
+### 1. Crear producto válido
+POST {{baseUrl}}
+Content-Type: application/json
+
+{
+  "name": "Laptop Lenovo",
+  "description": "Laptop con 16GB RAM y SSD",
+  "price": 899.99,
+  "stock": 25
+}
+
+###
+
+### 2. Crear producto con datos inválidos (validación)
+POST {{baseUrl}}
+Content-Type: application/json
+
+{
+  "name": "",
+  "description": "",
+  "price": -100,
+  "stock": -5
+}
+
+###
+
+### 3. Obtener todos los productos (sin filtros)
+GET {{baseUrl}}
+
+###
+
+### 4. Obtener productos paginados (página 1)
+GET {{baseUrl}}?page=1
+
+###
+
+### 5. Obtener productos con filtro por name
+GET {{baseUrl}}?name=Lenovo
+
+###
+
+### 6. Obtener productos con filtro por description
+GET {{baseUrl}}?description=SSD
+
+###
+
+### 7. Obtener productos con filtro por price
+GET {{baseUrl}}?price=899.99
+
+###
+
+### 8. Obtener productos con filtro por stock
+GET {{baseUrl}}?stock=25
+
+###
+
+### 9. Obtener producto por ID (cambiar ID si es necesario)
+GET {{baseUrl}}/2
+
+###
+
+### 10. Obtener producto que no existe
+GET {{baseUrl}}/9999
+
+###
+
+### 11. Actualizar producto correctamente
+PUT {{baseUrl}}/2
+Content-Type: application/json
+
+{
+  "id": 2,
+  "name": "Laptop Lenovo Actualizada",
+  "description": "Actualización con 32GB RAM",
+  "price": 1099.99,
+  "stock": 15
+}
+
+###
+
+### 12. Actualizar producto con ID inconsistente
+PUT {{baseUrl}}/99
+Content-Type: application/json
+
+{
+  "id": 99,
+  "name": "Producto incorrecto",
+  "description": "ID en URL no coincide con body",
+  "price": 99,
+  "stock": 1
+}
+
+###
+
+### 13. Eliminar producto por ID
+DELETE {{baseUrl}}/3
+
+###
+
+### 14. Eliminar producto inexistente
+DELETE {{baseUrl}}/9999
+
+###
