@@ -89,6 +89,76 @@ Editar appsettings.json:
 }
 ```
 
+## 🧪 Tests Unitarios
+
+Se incluye una solución aparte llamada `API-Productos.Unit-Testing` con pruebas unitarias para asegurar la calidad y correcto funcionamiento de las capas principales del proyecto.
+
+```bash
+ProductApi.UnitTests/
+├── Services/
+│ └── ProductServiceTests.cs # Pruebas de lógica de negocio
+├── Controllers/
+│ └── ProductControllerTests.cs # Pruebas de comportamiento del controlador
+├── Validators/
+│ └── ProductCreateDtoValidatorTests.cs
+```
+
+---
+
+### 🔧 Herramientas utilizadas
+
+| Paquete                      | Propósito                              |
+|-----------------------------|-----------------------------------------|
+| `xUnit`                     | Framework de testing principal          |
+| `Moq`                       | Simulación (mock) de dependencias       |
+| `FluentAssertions`          | Assertions más expresivas               |
+| `FluentValidation` | Validación de reglas en DTOs         |
+
+---
+
+### ✅ Cobertura actual
+
+| Capa                  | Cobertura         | Detalles                                                   |
+|-----------------------|-------------------|------------------------------------------------------------|
+| `ProductService`      | ✅ 100%            | Pruebas de creación, actualización, eliminación y obtención por ID |
+| `ProductController`   | ✅ 100%            | Pruebas de cada endpoint con validaciones y errores        |
+| `FluentValidation`    | ✅ 100%            | Reglas para `ProductCreateDTO` probadas                    |
+| `PagedResponse<T>`    | ✅ Usado y probado en `GetAll`              |
+
+---
+
+### 🧪 Pruebas destacadas
+
+#### ✔️ ProductServiceTests
+- Simulación del repositorio (`IProductRepository`).
+- Pruebas unitarias de los métodos: `CreateAsync`, `UpdateAsync`, `DeleteAsync`, `GetByIdAsync`.
+
+#### ✔️ ProductControllerTests
+- Mock de `IProductService` y `IValidator<ProductCreateDTO>`.
+- Verifica:
+  - Respuestas HTTP (`200`, `400`, `404`).
+  - Errores de validación.
+  - Respuesta estructurada con `ApiResponseData<T>` y `PagedResponse<T>`.
+
+#### ✔️ Validaciones
+- Se prueba cada regla definida con FluentValidation.
+- Casos válidos e inválidos, usando `TestValidate`.
+
+---
+### 🚀 Ejecutar los tests
+
+Ubícate en la carpeta raíz del proyecto y ejecuta:
+```bash
+dotnet test ProductApi.UnitTests
+```
+---
+
+## 📈 Próximos pasos
+- Agregar tests de integración con base de datos SQLite.
+- Integrar cobertura de código con coverlet y reportgenerator.
+- Automatizar pruebas en CI (GitHub Actions).
+
+
 ## 🔥 Ejecutar la Aplicación
 
 Instalar dependencias:

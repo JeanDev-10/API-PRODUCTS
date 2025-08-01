@@ -90,7 +90,7 @@ namespace API_Productos.Controllers
             }
         }
         [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(int id)
+        public async Task<ActionResult<ApiResponse>> Delete(int id)
         {
             try
             {
