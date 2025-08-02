@@ -10,7 +10,7 @@ public class ProductRepository : IProductRepository
 {
     private readonly AppDbContext _context;
     public ProductRepository(AppDbContext context) => _context = context;
-    public async Task<IEnumerable<Product>> GetAllFilteredAsync(string? name, string? description, decimal? price, int? stock, int page, int pageSize)
+    public IQueryable<Product> GetAllFilteredAsync(string? name, string? description, decimal? price, int? stock)
     {
         var query = _context.Products.AsQueryable();
 
@@ -26,10 +26,7 @@ public class ProductRepository : IProductRepository
         if (stock.HasValue)
             query = query.Where(p => p.Stock == stock);
 
-        return await query
-            .Skip((page - 1) * pageSize)
-            .Take(pageSize)
-            .ToListAsync();
+        return query;
     }
     public async Task<Product?> GetByIdAsync(int id) => await _context.Products.FindAsync(id);
     public async Task AddAsync(Product product)

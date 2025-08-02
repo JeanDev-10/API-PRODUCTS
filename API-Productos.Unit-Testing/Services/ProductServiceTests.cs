@@ -89,6 +89,27 @@ public class ProductServiceTests
         _productRepositoryMock.Verify(repo => repo.UpdateAsync(It.IsAny<Product>()), Times.Never);
     }
     [Fact]
+    public async Task UpdateAsync_Should_Return_True()
+    {
+        //arrange
+        _productRepositoryMock.Setup(repo => repo.GetByIdAsync(1)).ReturnsAsync(new Product
+        {
+            Id = 1,
+            Name = "Mouse",
+            Description = "Mouse inalámbrico",
+            Price = 25,
+            Stock = 10
+        });
+        //act
+        var result = await _productService.UpdateAsync(new ProductUpdateDTO
+        {
+            Id = 1,
+        });
+        //assert
+        result.Should().BeTrue();
+        _productRepositoryMock.Verify(repo => repo.UpdateAsync(It.IsAny<Product>()), Times.Once);
+    }
+    [Fact]
     public async Task DeleteAsync_Should_Delete_When_Exists()
     {
         //arrange

@@ -34,6 +34,8 @@ GET {{baseUrl}}
 
 ### 4. Obtener productos paginados (página 1)
 GET {{baseUrl}}?page=1
+### 4. Obtener productos paginados (10)
+GET {{baseUrl}}?pageSize=10
 
 ###
 

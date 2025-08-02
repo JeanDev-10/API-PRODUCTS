@@ -6,7 +6,7 @@ namespace API_Productos.Interfaces;
 
 public interface IProductRepository
 {
-    Task<IEnumerable<Product>> GetAllFilteredAsync(string? name, string? description, decimal? price, int? stock, int page, int pageSize);
+    IQueryable<Product> GetAllFilteredAsync(string? name, string? description, decimal? price, int? stock);
     Task<Product?> GetByIdAsync(int id);
     Task AddAsync(Product product);
     Task UpdateAsync(Product product);

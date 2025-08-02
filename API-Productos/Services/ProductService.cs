@@ -3,6 +3,7 @@ using API_Productos.DTOs.ApiResponse;
 using API_Productos.DTOs.Product;
 using API_Productos.Interfaces;
 using API_Productos.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace API_Productos.Services;
 
@@ -14,12 +15,16 @@ public class ProductService : IProductService
 
     public async Task<PagedResponse<ProductResponseDTO>> GetAllAsync(string? name, string? desc, decimal? price, int? stock, int page, int pageSize)
     {
-        var query = await _repo.GetAllFilteredAsync(name, desc, price, stock, page, pageSize);
-        var totalRecords = query.Count();
+        var query = _repo.GetAllFilteredAsync(name, desc, price, stock);
+        var totalRecords = await query.CountAsync();
+        var pagedData = await query
+        .Skip((page - 1) * pageSize)
+        .Take(pageSize)
+        .ToListAsync();
 
         return new PagedResponse<ProductResponseDTO>
         {
-            Data = query.Select(p => new ProductResponseDTO
+            Data = pagedData.Select(p => new ProductResponseDTO
             {
                 Id = p.Id,
                 Name = p.Name,
